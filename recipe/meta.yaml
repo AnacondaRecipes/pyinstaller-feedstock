@@ -1,4 +1,7 @@
 {% set name = "PyInstaller" %}
+# NOTE: the test step triggers antivirus stuff.  Let IT know that you're building a new pyinstaller release,
+#    and that they should watch for hello.exe triggering alerts.  Windows jobs in particular will fail with
+#    what looks like a permission error.
 {% set version = "3.6" %}
 {% set sha256 = "3730fa80d088f8bb7084d32480eb87cbb4ddb64123363763cf8f2a1378c1c4b7" %}
 
