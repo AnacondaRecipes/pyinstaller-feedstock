@@ -49,7 +49,7 @@ requirements:
     - altgraph
     - python
     - pefile >=2017.9.3  # [win]
-    - pycrypto
+    - pycryptodome
     - pywin32  # [win]
     - pywin32-ctypes  # [win]
     - dis3  # [py27]
