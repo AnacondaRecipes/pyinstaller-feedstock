@@ -1,6 +1,9 @@
 {% set name = "PyInstaller" %}
-{% set version = "3.5" %}
-{% set sha256 = "ee7504022d1332a3324250faf2135ea56ac71fdb6309cff8cd235de26b1d0a96" %}
+# NOTE: the test step triggers antivirus stuff.  Let IT know that you're building a new pyinstaller release,
+#    and that they should watch for hello.exe triggering alerts.  Windows jobs in particular will fail with
+#    what looks like a permission error.
+{% set version = "3.6" %}
+{% set sha256 = "3730fa80d088f8bb7084d32480eb87cbb4ddb64123363763cf8f2a1378c1c4b7" %}
 
 package:
   name: {{ name.lower() }}
@@ -14,7 +17,7 @@ source:
     - 0001-depend-bindepend-find-statically-linked-libraries.patch
 
 build:
-  number: 0
+  number: 1
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -37,24 +40,25 @@ requirements:
     - {{ compiler("c") }}
     - pip
     - python
-    - setuptools
+    - setuptools  <45.0
   host:
     - pip
     - python
-    - setuptools
+    - setuptools   <45.0
     - waf
     - zlib
 
   run:
+    - altgraph
     - python
-    - setuptools
     - pefile >=2017.9.3  # [win]
-    - pycrypto
+    - pycryptodome
     - pywin32  # [win]
     - pywin32-ctypes  # [win]
-    - zlib
     - dis3  # [py27]
     - macholib >=1.8
+  run_constrained:
+    - setuptools  <45.0
 
 test:
   imports:
@@ -82,3 +86,4 @@ extra:
   recipe-maintainers:
     - jakirkham
     - nicoddemus
+    - hadim
