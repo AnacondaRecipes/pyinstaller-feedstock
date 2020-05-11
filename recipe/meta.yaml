@@ -1,4 +1,7 @@
 {% set name = "PyInstaller" %}
+# NOTE: the test step triggers antivirus stuff.  Let IT know that you're building a new pyinstaller release,
+#    and that they should watch for hello.exe triggering alerts.  Windows jobs in particular will fail with
+#    what looks like a permission error.
 {% set version = "3.6" %}
 {% set sha256 = "3730fa80d088f8bb7084d32480eb87cbb4ddb64123363763cf8f2a1378c1c4b7" %}
 
@@ -16,7 +19,7 @@ source:
     - 0003-hooks-Update-pkg_resources-hook-for-setuptools-v45.0.patch
 
 build:
-  number: 1
+  number: 2
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -54,7 +57,7 @@ requirements:
     - altgraph
     - python
     - pefile >=2017.9.3  # [win]
-    - pycrypto
+    - pycryptodome
     - pywin32  # [win]
     - pywin32-ctypes  # [win]
     - dis3  # [py27]
@@ -75,6 +78,7 @@ test:
 
   files:
     - hello.py
+    - multiprocessing_test.py
 
 about:
   home: http://www.pyinstaller.org
