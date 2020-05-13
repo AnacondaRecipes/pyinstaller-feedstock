@@ -30,10 +30,22 @@ if __name__ == '__main__':
     import sys
     if sys.platform.startswith('win'):
         multiprocessing.freeze_support()
-    elif sys.platform.startswith('darwin'):
+    elif sys.platform.startswith('darwin') and sys.version_info[:2] == (3,8):
         # https://bugs.python.org/issue40106
-        multiprocessing.set_start_method('fork')
+        # https://bugs.python.org/issue33725
+
+        # We might want to consider this for `conda` and `conda-standalone`.
+        # multiprocessing.set_start_method('fork')
+        pass
     print('main 1')
     resultQueue = multiprocessing.Queue()
-    SendeventProcess(resultQueue)
+    p = SendeventProcess(resultQueue)
+    # This is the 'correct' fix for this code as-per the docs and upstream and it does
+    # work (as does set_start_method('fork'), but, from 
+    # "Adding p.join() immediately after p.start() seems to work, but increases the total run-time by
+    #  factor between two and four, user time by factor of five, and system time by factor of ten. 
+    #  Occasionally even with p.join() I'm getting some processes crashing like
+    #  shown in https://bugs.python.org/issue33725#msg365249."
+    #
     print('main 2')
+    p.join()
