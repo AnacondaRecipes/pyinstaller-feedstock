@@ -19,7 +19,9 @@ dist/hello/./hello
 # _MP_OUT_EXPECT=$(echo -e "main 1\nmain 2\nSendeventProcess 1\SendeventProcess 2\n")
 [[ -d dist ]] && rm -rf dist
 [[ -d "${HOME}/Library/Application Support/pyinstaller" ]] && rm -rf "${HOME}/Library/Application Support/pyinstaller"
-pyinstaller "${_RUN_DEBUG[@]}" "${_BUILD_DEBUG[@]}" --noconfirm -n multiprocessing_test multiprocessing_test.py
+pyinstaller "${_RUN_DEBUG[@]}" "${_BUILD_DEBUG[@]}" --noconfirm -n multiprocessing_test  \
+  --hiddenimport=multiprocessing.set_start_method  \
+  multiprocessing_test.py
 ls -lh dist/multiprocessing_test
 
 # This was intended to debug a bug on macOS Python, but it doesn't work there!
