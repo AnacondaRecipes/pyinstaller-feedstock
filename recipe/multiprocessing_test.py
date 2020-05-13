@@ -35,8 +35,7 @@ if __name__ == '__main__':
         # https://bugs.python.org/issue33725
 
         # We might want to consider this for `conda` and `conda-standalone`.
-        # multiprocessing.set_start_method('fork')
-        pass
+        multiprocessing.set_start_method('fork')
     print('main 1')
     resultQueue = multiprocessing.Queue()
     p = SendeventProcess(resultQueue)
