@@ -30,7 +30,7 @@ if __name__ == '__main__':
     import sys
     if sys.platform.startswith('win'):
         multiprocessing.freeze_support()
-    elif sys.platform.startswith('darwin') and sys.version_info[:2] == (3,8):
+    elif sys.platform.startswith('darwin') and (sys.version_info[:2] == (3,8) or sys.version_info[:2] == (3,9)):
         # https://bugs.python.org/issue40106
         # https://bugs.python.org/issue33725
 

@@ -20,7 +20,7 @@ source:
     - 0004-Python-3.8-multiprocessing.resource_tracker-fix.patch
 
 build:
-  number: 5
+  number: 6
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -69,6 +69,8 @@ requirements:
     - pywin32-ctypes  # [win]
     - dis3  # [py27]
     - macholib >=1.8
+    - setuptools
+    - importlib-metadata >=0.8  # [py<38]
 
 test:
   imports:
