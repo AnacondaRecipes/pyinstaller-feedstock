@@ -15,12 +15,12 @@ source:
   sha256: {{ sha256 }}
   patches:
     - 0001-depend-bindepend-find-statically-linked-libraries.patch
-    - 0002-Bootloader-build-Fallback-to-a-default-min-macOS-ver.patch
-    - 0003-hooks-Update-pkg_resources-hook-for-setuptools-v45.0.patch
-    - 0004-Python-3.8-multiprocessing.resource_tracker-fix.patch
+#    - 0002-Bootloader-build-Fallback-to-a-default-min-macOS-ver.patch
+#    - 0003-hooks-Update-pkg_resources-hook-for-setuptools-v45.0.patch
+#    - 0004-Python-3.8-multiprocessing.resource_tracker-fix.patch
 
 build:
-  number: 6
+  number: 0
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -34,7 +34,7 @@ build:
     # Remove the pre-compiled bootloaders (available in sdist)
     - rm -fr ${SRC_DIR}/PyInstaller/bootloader/{Darwin,Linux,Windows}-{64,32}bit  # [unix]
     - pushd bootloader
-    - waf --prefix="${PREFIX}" --clang distclean all            # [osx]
+    - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
     - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
     - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
     - popd
