@@ -15,9 +15,8 @@ source:
   sha256: {{ sha256 }}
   patches:
     - 0001-depend-bindepend-find-statically-linked-libraries.patch
-#    - 0002-Bootloader-build-Fallback-to-a-default-min-macOS-ver.patch
-#    - 0003-hooks-Update-pkg_resources-hook-for-setuptools-v45.0.patch
-#    - 0004-Python-3.8-multiprocessing.resource_tracker-fix.patch
+    - 0002-Bootloader-build-Fallback-to-a-default-min-macOS-ver.patch
+    - 0003-hooks-Update-pkg_resources-hook-for-setuptools-v45.0.patch
 
 build:
   number: 0
