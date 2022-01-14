@@ -2,16 +2,16 @@
 # NOTE: the test step triggers antivirus stuff.  Let IT know that you're building a new pyinstaller release,
 #    and that they should watch for hello.exe triggering alerts.  Windows jobs in particular will fail with
 #    what looks like a permission error.
-{% set version = "4.7" %}
-{% set sha256 = "2c7f4810dc5272ec1b388a7f1ff6b56d38653c1b0c9ac2d9dd54fa06b590e372" %}
+{% set version = "4.8" %}
+{% set sha256 = "7ae868bbcc502832a2c802c84a1dbb9f48b44445c50144c29bfcd7b760140e13" %}
 
 package:
   name: {{ name.lower() }}
   version: {{ version }}
 
 source:
-  fn: PyInstaller-{{ version }}.tar.bz2
-  url: https://files.pythonhosted.org/packages/00/ca/58dd68fee42490be1c86c9e912fc9ad0bf44c72edd882397ad11c21fbecb/pyinstaller-4.7.tar.gz
+  fn: pyinstaller-{{ version }}.tar.gz
+  url: https://files.pythonhosted.org/packages/7f/6b/688fceb8f1fafeb028de72ad47c5b1377be9f74a75801802f1463e451b22/pyinstaller-4.8.tar.gz
   sha256: {{ sha256 }}
   patches:
     - 0001-depend-bindepend-find-statically-linked-libraries.patch
