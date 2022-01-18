@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [[ "${target_platform}" == "linux-aarch64" ]]; then
+    export CFLAGS="$CFLAGS -march-generic"
+fi
+
 declare -a _RUN_DEBUG=()
 # If you need to figure out what's going on here:
 # _RUN_DEBUG+=('-d')
