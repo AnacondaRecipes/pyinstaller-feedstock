@@ -72,6 +72,9 @@ requirements:
     - importlib-metadata >=0.8  # [py<38]
 
 test:
+  requires:
+    - binutils      [linux and aarch64]
+
   imports:
     - PyInstaller
 
