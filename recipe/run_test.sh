@@ -1,14 +1,5 @@
 #!/usr/bin/env bash
 
-#if [[ "${target_platform}" == "linux-aarch64" ]]; then
-#    rm -rf $SP_DIR/../test
-#    pyinstaller -n hello hello.py
-#    ls -lh dist/hello
-#    dist/hello/./hello
-#    export CFLAGS="$CFLAGS -mcpu=generic"
-#    exit 0
-#fi
-
 declare -a _RUN_DEBUG=()
 # If you need to figure out what's going on here:
 # _RUN_DEBUG+=('-d')
