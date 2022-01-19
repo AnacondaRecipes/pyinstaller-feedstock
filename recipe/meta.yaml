@@ -73,6 +73,8 @@ requirements:
 
 test:
   requires:
+    # The test requires objdump which is part of the binutils package.
+    # Maybe add this as a test dependency on all platforms?
     - binutils      [linux and aarch64]
 
   imports:
