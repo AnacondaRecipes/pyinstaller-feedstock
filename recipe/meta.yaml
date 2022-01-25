@@ -52,10 +52,12 @@ requirements:
     - m2-patch  # [win]
     - m2-gcc-libs  # [win]
     - patch  # [not win]
+
   host:
     - pip
     - python
     - setuptools
+    - wheel
     - waf
     - zlib  # [not win]
 
