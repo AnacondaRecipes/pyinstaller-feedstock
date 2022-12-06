@@ -62,7 +62,7 @@ requirements:
     - pywin32  # [win]
     - pywin32-ctypes  # [win]
     - macholib >=1.8  # [osx]
-    - setuptools >= 42.0.0  # due to pkg_resources import
+    - setuptools >=42.0.0  # due to pkg_resources import
     - importlib-metadata >=0.8  # [py<38]
 
 test:
