@@ -77,7 +77,6 @@ test:
     # These are designed for Windows only.
     - pyi-grab_version --help     # [win]
     - pyi-set_version --help      # [win]
-
   files:
     - hello.py
     - multiprocessing_test.py
