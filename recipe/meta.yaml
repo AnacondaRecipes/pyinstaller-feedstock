@@ -55,6 +55,7 @@ requirements:
 
   run:
     - altgraph
+    - binutils  # [aarch64]
     - python
     - pefile >=2022.5.30  # [win]
     - pyinstaller-hooks-contrib >=2021.4
