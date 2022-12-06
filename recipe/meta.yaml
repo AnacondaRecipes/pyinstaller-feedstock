@@ -87,6 +87,13 @@ about:
   license_family: GPL
   license_file: COPYING.txt
   summary: PyInstaller bundles a Python application and all its dependencies into a single package.
+  description: |
+      PyInstaller bundles a Python application and all its dependencies into a single package.
+      The user can run the packaged app without installing a Python interpreter or any modules.
+      PyInstaller reads a Python script written by you. It analyzes your code to discover every
+      other module and library your script needs in order to execute. Then it collects copies of
+      all those files -- including the active Python interpreter! -- and puts them with your script
+      in a single folder, or optionally in a single executable file.
   dev_url: https://github.com/pyinstaller/pyinstaller
   doc_url: https://pyinstaller.org
 
