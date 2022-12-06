@@ -67,6 +67,8 @@ requirements:
 test:
   imports:
     - PyInstaller
+  requires:
+    - pip
   files:
     - hello.py
     - multiprocessing_test.py
