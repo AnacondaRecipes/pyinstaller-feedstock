@@ -5,6 +5,8 @@ pyi-archive_viewer --help
 pyi-bindepend --help
 pyi-makespec --help
 
+pip check
+
 declare -a _RUN_DEBUG=()
 # If you need to figure out what's going on here:
 # _RUN_DEBUG+=('-d')
