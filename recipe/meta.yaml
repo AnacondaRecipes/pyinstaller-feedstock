@@ -2,8 +2,8 @@
 # NOTE: the test step triggers antivirus stuff.  Let IT know that you're building a new pyinstaller release,
 #    and that they should watch for hello.exe triggering alerts.  Windows jobs in particular will fail with
 #    what looks like a permission error.
-{% set version = "5.6.2" %}
-{% set sha256 = "865025b6809d777bb0f66d8f8ab50cc97dc3dbe0ff09a1ef1f2fd646432714fc" %}
+{% set version = "5.7.0" %}
+{% set sha256 = "0e5953937d35f0b37543cc6915dacaf3239bcbdf3fd3ecbb7866645468a16775" %}
 
 package:
   name: {{ name|lower }}
