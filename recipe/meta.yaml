@@ -2,8 +2,8 @@
 # NOTE: the test step triggers antivirus stuff.  Let IT know that you're building a new pyinstaller release,
 #    and that they should watch for hello.exe triggering alerts.  Windows jobs in particular will fail with
 #    what looks like a permission error.
-{% set version = "5.6.2" %}
-{% set sha256 = "865025b6809d777bb0f66d8f8ab50cc97dc3dbe0ff09a1ef1f2fd646432714fc" %}
+{% set version = "6.3.0" %}
+{% set sha256 = "914d4c96cc99472e37ac552fdd82fbbe09e67bb592d0717fcffaa99ea74273df" %}
 
 package:
   name: {{ name|lower }}
@@ -15,6 +15,7 @@ source:
 
 build:
   number: 0
+  skip: True  # [py<38]
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -32,38 +33,37 @@ build:
     - rd /s /q %SRC_DIR%\bootloader\waflib  # [win]
     # Build the bootloader
     - pushd bootloader
-    - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
-    - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
-    - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
+    - waf --prefix="${PREFIX}" --clang distclean all  # [osx]
+    - waf --prefix="${PREFIX}" --gcc distclean all    # [linux]
+    - waf --prefix="%LIBRARY_PREFIX%" distclean all   # [win]
     - popd
-    - "{{ PYTHON }} -m pip install . --no-deps -vv"
+    - "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv"
   preserve_egg_dir: True
 
 requirements:
   build:
     - {{ compiler("c") }}
-    - pip
-    - python
-    - setuptools
 
   host:
     - pip
     - python
-    - setuptools
+    - setuptools >=42.0.0
     - wheel
     - waf
+    - zlib
 
   run:
     - altgraph
     - binutils  # [aarch64]
+    - packaging >=22.0
     - python
     - pefile >=2022.5.30  # [win]
     - pyinstaller-hooks-contrib >=2021.4
     - pywin32  # [win]
-    - pywin32-ctypes  # [win]
+    - pywin32-ctypes  >=0.2.1  # [win]
     - macholib >=1.8  # [osx]
     - setuptools >=42.0.0  # due to pkg_resources import
-    - importlib-metadata >=0.8  # [py<38]
+    - importlib-metadata >=4.6  # [py<310]
 
 test:
   imports:
