@@ -1,3 +1,0 @@
-upload_without_merge: True
-channels:
-  mesters_org: conda_standalone
