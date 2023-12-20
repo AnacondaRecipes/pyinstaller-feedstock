@@ -35,6 +35,8 @@ build:
     - popd
     - "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv"
   preserve_egg_dir: True
+  overlinking_ignore_patterns:   # [s390x]
+    - '*'                        # [s390x]
 
 requirements:
   build:
