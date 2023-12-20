@@ -1,9 +1,6 @@
 {% set name = "pyinstaller" %}
-# NOTE: the test step triggers antivirus stuff.  Let IT know that you're building a new pyinstaller release,
-#    and that they should watch for hello.exe triggering alerts.  Windows jobs in particular will fail with
-#    what looks like a permission error.
-{% set version = "5.6.2" %}
-{% set sha256 = "865025b6809d777bb0f66d8f8ab50cc97dc3dbe0ff09a1ef1f2fd646432714fc" %}
+{% set version = "5.13.2" %}
+{% set sha256 = "c8e5d3489c3a7cc5f8401c2d1f48a70e588f9967e391c3b06ddac1f685f8d5d2" %}
 
 package:
   name: {{ name|lower }}
@@ -36,15 +33,12 @@ build:
     - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
     - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
     - popd
-    - "{{ PYTHON }} -m pip install . --no-deps -vv"
+    - "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv"
   preserve_egg_dir: True
 
 requirements:
   build:
     - {{ compiler("c") }}
-    - pip
-    - python
-    - setuptools
 
   host:
     - pip
@@ -63,7 +57,7 @@ requirements:
     - pywin32-ctypes  # [win]
     - macholib >=1.8  # [osx]
     - setuptools >=42.0.0  # due to pkg_resources import
-    - importlib-metadata >=0.8  # [py<38]
+    - importlib-metadata >=1.4  # [py<38]
 
 test:
   imports:
@@ -97,5 +91,3 @@ extra:
     - hadim
     - nehaljwani
     - mingwandroid
-  skip-lints:
-    - uses_setuptools
