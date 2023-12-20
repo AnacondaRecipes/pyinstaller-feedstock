@@ -97,5 +97,3 @@ extra:
     - hadim
     - nehaljwani
     - mingwandroid
-  skip-lints:
-    - uses_setuptools
