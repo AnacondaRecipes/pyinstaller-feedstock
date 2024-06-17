@@ -96,6 +96,7 @@ about:
   license_family: GPL
   license_file: COPYING.txt
   dev_url: https://github.com/pyinstaller/pyinstaller
+  doc_url: https://github.com/pyinstaller/pyinstaller
   summary: PyInstaller bundles a Python application and all its dependencies into a single package.
 
 extra:
