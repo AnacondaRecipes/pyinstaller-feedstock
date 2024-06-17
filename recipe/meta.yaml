@@ -55,13 +55,14 @@ requirements:
     - setuptools
     - waf
     - zlib
+    - wheel
 
   run:
     - altgraph
     - packaging >=22.0
     - python
 #    - pefile >=2022.5.30      # [win]
-    - pefile                  # [win]
+    - pefile >2019.4.18       # [win]
     - pywin32                 # [win]
     - pywin32-ctypes >=0.2.1  # [win]
     - macholib >=1.8  # [osx]
@@ -70,6 +71,8 @@ requirements:
     - importlib-metadata >=4.6  # [py<310]
 
 test:
+  commands:
+    - pip check
   imports:
     - PyInstaller
 
@@ -86,7 +89,7 @@ test:
     - hello.py
 
 about:
-  home: http://www.pyinstaller.org
+  home: https://www.pyinstaller.org
   # https://github.com/pyinstaller/pyinstaller/blob/v3.6/COPYING.txt#L11
   license: GPL-2.0-or-later WITH Bootloader-exception
   license_family: GPL
