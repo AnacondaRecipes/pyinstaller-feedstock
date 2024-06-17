@@ -99,6 +99,7 @@ extra:
     reason: Update to a newer version
   recipe-maintainers:
     - ianaobi
+    - bkreider
     - isuruf
     - jakirkham
     - nicoddemus
