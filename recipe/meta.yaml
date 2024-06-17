@@ -14,7 +14,7 @@ source:
 
 build:
   number: 0
-#  skip: true  # [py<38 or py>312]
+  skip: true  # [py<38 or py>312]
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -103,7 +103,6 @@ extra:
     reason: Update to a newer version
   recipe-maintainers:
     - ianaobi
-    - bkreider
     - isuruf
     - jakirkham
     - nicoddemus
