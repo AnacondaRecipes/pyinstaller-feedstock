@@ -60,7 +60,8 @@ requirements:
     - altgraph
     - packaging >=22.0
     - python
-    - pefile >=2022.5.30      # [win]
+#    - pefile >=2022.5.30      # [win]
+    - pefile                  # [win]
     - pywin32                 # [win]
     - pywin32-ctypes >=0.2.1  # [win]
     - macholib >=1.8  # [osx]
