@@ -62,7 +62,6 @@ requirements:
     - packaging >=22.0
     - python
     - pefile >=2022.5.30      # [win]
-#    - pefile >2019.4.18       # [win]
     - pywin32                 # [win]
     - pywin32-ctypes >=0.2.1  # [win]
     - macholib >=1.8  # [osx]
@@ -75,6 +74,8 @@ test:
     - pip check
   imports:
     - PyInstaller
+  requirements:
+    - pip
 
   commands:
     - pyinstaller --help
@@ -101,8 +102,9 @@ extra:
   anaconda-services:
     ref: https://anaconda.zendesk.com/agent/tickets/50852
     reason: Update to a newer version
+    recipe-maintainers:
+      - ianaobi
   recipe-maintainers:
-    - ianaobi
     - isuruf
     - jakirkham
     - nicoddemus
