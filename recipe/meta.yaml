@@ -1,18 +1,21 @@
 {% set name = "pyinstaller" %}
-{% set version = "5.13.2" %}
-{% set sha256 = "c8e5d3489c3a7cc5f8401c2d1f48a70e588f9967e391c3b06ddac1f685f8d5d2" %}
+{% set version = "6.8.0" %}
+{% set sha256 = "3f4b6520f4423fe19bcc2fd63ab7238851ae2bdcbc98f25bc5d2f97cc62012e9" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name.lower() }}
   version: {{ version }}
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: {{ sha256 }}
+  patches:
+    - 0001-don-t-set-arch.patch
 
 build:
   number: 0
-  skip: True  # [py<37]
+  skip: true  # [py<38 or py>312]
+#  skip: true  # [linux-aarch64 or osx-64]
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -23,6 +26,7 @@ build:
   script:
     - export PYI_STATIC_ZLIB=1  # [unix]
     - export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"               # [unix]
+    - export LDFLAGS="${LDFLAGS} -mmacosx-version-min=${MACOSX_DEPLOYMENT_TARGET}"  # [osx]
     # Remove the pre-compiled bootloaders (available in sdist)
     - rm -fr ${SRC_DIR}/PyInstaller/bootloader/{Darwin,Linux,Windows}-{64,32}bit  # [unix]
     # Remove vendored waflib dir
@@ -30,67 +34,81 @@ build:
     - rd /s /q %SRC_DIR%\bootloader\waflib  # [win]
     # Build the bootloader
     - pushd bootloader
-    - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
-    - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
+    - waf --prefix="${PREFIX}" --clang distclean all            # [osx]
+    - waf --prefix="${PREFIX}" --gcc distclean all     # [linux]
     - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
+    # Build the package
     - popd
-    - "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv"
-  preserve_egg_dir: True
-  overlinking_ignore_patterns:   # [s390x]
-    - '*'                        # [s390x]
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
+  preserve_egg_dir: true
 
 requirements:
   build:
     - {{ compiler("c") }}
-
+#    - {{ stdlib("c") }}
+    - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+    - pip
+    - python
+    - setuptools
   host:
     - pip
     - python
     - setuptools
-    - wheel
     - waf
+    - zlib
+    - wheel
 
   run:
     - altgraph
-    - binutils  # [aarch64]
+    - packaging >=22.0
     - python
-    - pefile >=2022.5.30  # [win]
-    - pyinstaller-hooks-contrib >=2021.4
-    - pywin32  # [win]
-    - pywin32-ctypes  # [win]
+    - pefile >=2022.5.30      # [win]
+    - pywin32                 # [win]
+    - pywin32-ctypes >=0.2.1  # [win]
     - macholib >=1.8  # [osx]
-    - setuptools >=42.0.0  # due to pkg_resources import
-    - importlib-metadata >=1.4  # [py<38]
+    - pyinstaller-hooks-contrib >=2024.6
+    - setuptools >=42.0.0
+    - importlib-metadata >=4.6  # [py<310]
 
 test:
+  commands:
+    - pip check
   imports:
     - PyInstaller
-  requires:
+  requirements:
     - pip
+
+  commands:
+    - pyinstaller --help
+    - pyi-archive_viewer --help
+    - pyi-bindepend --help
+    - pyi-makespec --help
+    # These are designed for Windows only.
+    - pyi-grab_version --help     # [win]
+    - pyi-set_version --help      # [win]
+
   files:
     - hello.py
-    - multiprocessing_test.py
 
 about:
-  home: https://pyinstaller.org
-  license: GPL-2.0-or-later
+  home: https://www.pyinstaller.org
+  # https://github.com/pyinstaller/pyinstaller/blob/v3.6/COPYING.txt#L11
+  license: GPL-2.0-or-later WITH Bootloader-exception
   license_family: GPL
   license_file: COPYING.txt
-  summary: PyInstaller bundles a Python application and all its dependencies into a single package.
-  description: |
-      PyInstaller bundles a Python application and all its dependencies into a single package.
-      The user can run the packaged app without installing a Python interpreter or any modules.
-      PyInstaller reads a Python script written by you. It analyzes your code to discover every
-      other module and library your script needs in order to execute. Then it collects copies of
-      all those files -- including the active Python interpreter! -- and puts them with your script
-      in a single folder, or optionally in a single executable file.
   dev_url: https://github.com/pyinstaller/pyinstaller
-  doc_url: https://pyinstaller.org
+  doc_url: https://github.com/pyinstaller/pyinstaller
+  summary: PyInstaller bundles a Python application and all its dependencies into a single package.
 
 extra:
+  anaconda-services:
+    ref: https://anaconda.zendesk.com/agent/tickets/50852
+    reason: Update to a newer version
+    recipe-maintainers:
+      - ianaobi
+      - bkreider
   recipe-maintainers:
+    - isuruf
     - jakirkham
     - nicoddemus
-    - hadim
     - nehaljwani
-    - mingwandroid
