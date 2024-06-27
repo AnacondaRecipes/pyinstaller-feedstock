@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  skip: True  # [py<37]
+  skip: True  # [py<38 and py>313]
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -50,16 +50,17 @@ requirements:
     - waf
 
   run:
-    - altgraph
-    - binutils  # [aarch64]
     - python
+    - setuptools >=42.0.0
+    - altgraph
+    # - binutils  # [aarch64]
     - pefile >=2022.5.30  # [win]
-    - pyinstaller-hooks-contrib >=2021.4
-    - pywin32  # [win]
-    - pywin32-ctypes  # [win]
+    - pywin32-ctypes >=0.2.1 # [win]
     - macholib >=1.8  # [osx]
-    - setuptools >=42.0.0  # due to pkg_resources import
-    - importlib-metadata >=1.4  # [py<38]
+    - pyinstaller-hooks-contrib >=2024.6
+    # - pywin32  # [win]
+    - importlib-metadata >=4.6  # [py<310]
+    - packaging >=22.0
 
 test:
   imports:
