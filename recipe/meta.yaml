@@ -47,7 +47,6 @@ requirements:
     - python
     - setuptools
     - wheel
-    - waf
 
   run:
     - python
@@ -67,9 +66,14 @@ test:
     - PyInstaller
   requires:
     - pip
-  files:
-    - hello.py
-    - multiprocessing_test.py
+    - pytest >=2.7.3
+    - execnet >=1.5.0
+    - psutil
+  source_files:
+    - tests
+  commands:
+    - pip check
+    - pytest tests -vv
 
 about:
   home: https://pyinstaller.org
