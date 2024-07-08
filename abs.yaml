@@ -1,2 +1,2 @@
-staging_channels:
+channels:
  - https://staging.continuum.io/prefect/fs/pefile-feedstock/pr3/70149e3
