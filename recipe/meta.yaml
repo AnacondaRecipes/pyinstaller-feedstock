@@ -12,7 +12,8 @@ source:
 
 build:
   number: 0
-  skip: True  # [py<37]
+  # temporary skip to remedy py312 missing on win
+  skip: True  # [not (win and py==312)]
   entry_points:
     - pyinstaller = PyInstaller.__main__:run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
