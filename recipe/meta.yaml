@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  skip: True  # [py<38 and py>313]
+  skip: True  # [py<38 and py>312]
   entry_points:
     - pyinstaller = PyInstaller.__main__:_console_script_run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -20,20 +20,20 @@ build:
     - pyi-makespec = PyInstaller.utils.cliutils.makespec:run
     - pyi-set_version = PyInstaller.utils.cliutils.set_version:run
   script:
-    - export PYI_STATIC_ZLIB=1  # [unix]
-    - export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"               # [unix]
-    # Remove the pre-compiled bootloaders (available in sdist)
-    - rm -fr ${SRC_DIR}/PyInstaller/bootloader/{Darwin,Linux,Windows}-{64,32}bit  # [unix]
-    # Remove vendored waflib dir
-    - rm -fr ${SRC_DIR}/bootloader/waflib   # [unix]
-    - rd /s /q %SRC_DIR%\bootloader\waflib  # [win]
-    # Build the bootloader
-    - pushd bootloader
-    - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
-    - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
-    - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
-    - popd
-    - "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv"
+    # - export PYI_STATIC_ZLIB=1  # [unix]
+    # - export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"               # [unix]
+    # # Remove the pre-compiled bootloaders (available in sdist)
+    # - rm -fr ${SRC_DIR}/PyInstaller/bootloader/{Darwin,Linux,Windows}-{64,32}bit  # [unix]
+    # # Remove vendored waflib dir
+    # - rm -fr ${SRC_DIR}/bootloader/waflib   # [unix]
+    # - rd /s /q %SRC_DIR%\bootloader\waflib  # [win]
+    # # Build the bootloader
+    # - pushd bootloader
+    # - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
+    # - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
+    # - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
+    # - popd
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   preserve_egg_dir: True
   overlinking_ignore_patterns:   # [s390x]
     - '*'                        # [s390x]
@@ -64,16 +64,25 @@ requirements:
 test:
   imports:
     - PyInstaller
+    - mymodule2
   requires:
     - pip
     - pytest >=2.7.3
+    - pytest-timeout
+    - pytest-xdist
     - execnet >=1.5.0
     - psutil
+    - lxml
   source_files:
     - tests
+    - setup.cfg
+    - tests/functional/test_*.py
+    - tests/unit/test_*.py
+    # - tests/unit/test_modulegraph/test_modulegraph.py::TestFunctions::test_find_module
   commands:
     - pip check
-    - pytest tests -vv
+    - pytest tests/functional/test_*.py -vv
+    - pytest ests/unit/test_*.py -vv
 
 about:
   home: https://pyinstaller.org
