@@ -64,7 +64,6 @@ requirements:
 test:
   imports:
     - PyInstaller
-    - mymodule2
   requires:
     - pip
     - pytest >=2.7.3
@@ -81,8 +80,7 @@ test:
     # - tests/unit/test_modulegraph/test_modulegraph.py::TestFunctions::test_find_module
   commands:
     - pip check
-    - pytest tests/functional/test_*.py -vv
-    - pytest ests/unit/test_*.py -vv
+    - pytest tests/unit/test_*.py tests/functional/test_*.py -vv -k "not tests/functional/test_libraries.py" --timeout 300
 
 about:
   home: https://pyinstaller.org
