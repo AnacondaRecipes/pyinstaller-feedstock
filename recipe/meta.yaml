@@ -20,19 +20,19 @@ build:
     - pyi-makespec = PyInstaller.utils.cliutils.makespec:run
     - pyi-set_version = PyInstaller.utils.cliutils.set_version:run
   script:
-    # - export PYI_STATIC_ZLIB=1  # [unix]
-    # - export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"               # [unix]
-    # # Remove the pre-compiled bootloaders (available in sdist)
-    # - rm -fr ${SRC_DIR}/PyInstaller/bootloader/{Darwin,Linux,Windows}-{64,32}bit  # [unix]
-    # # Remove vendored waflib dir
-    # - rm -fr ${SRC_DIR}/bootloader/waflib   # [unix]
-    # - rd /s /q %SRC_DIR%\bootloader\waflib  # [win]
-    # # Build the bootloader
-    # - pushd bootloader
-    # - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
-    # - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
-    # - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
-    # - popd
+    - export PYI_STATIC_ZLIB=1  # [unix]
+    - export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"               # [unix]
+    # Remove the pre-compiled bootloaders (available in sdist)
+    - rm -fr ${SRC_DIR}/PyInstaller/bootloader/{Darwin,Linux,Windows}-{64,32}bit  # [unix]
+    # Remove vendored waflib dir
+    - rm -fr ${SRC_DIR}/bootloader/waflib   # [unix]
+    - rd /s /q %SRC_DIR%\bootloader\waflib  # [win]
+    # Build the bootloader
+    - pushd bootloader
+    - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
+    - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
+    - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
+    - popd
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   preserve_egg_dir: True
   overlinking_ignore_patterns:   # [s390x]
@@ -47,6 +47,7 @@ requirements:
     - python
     - setuptools
     - wheel
+    - waf
 
   run:
     - python
