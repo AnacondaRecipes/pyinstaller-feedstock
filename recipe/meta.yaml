@@ -11,7 +11,7 @@ source:
 
 build:
   number: 0
-  skip: True  # [py<38 and py>312]
+  skip: True  # [py<38 or py>312]
   entry_points:
     - pyinstaller = PyInstaller.__main__:_console_script_run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -56,7 +56,7 @@ requirements:
     - pefile >=2022.5.30  # [win]
     - pywin32-ctypes >=0.2.1 # [win]
     - macholib >=1.8  # [osx]
-    - pyinstaller-hooks-contrib >=2024.6
+    - pyinstaller-hooks-contrib >=2024.7
     # - pywin32  # [win]
     - importlib-metadata >=4.6  # [py<310]
     - packaging >=22.0
