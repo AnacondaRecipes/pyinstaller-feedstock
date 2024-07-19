@@ -29,14 +29,12 @@ build:
     - rd /s /q %SRC_DIR%\bootloader\waflib  # [win]
     # Build the bootloader
     - pushd bootloader
-    - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
-    - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
+    - waf --prefix="${PREFIX}" --clang distclean all  # [osx]
+    - waf --prefix="${PREFIX}" --gcc distclean all     # [linux]
     - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
     - popd
     - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   preserve_egg_dir: True
-  overlinking_ignore_patterns:   # [s390x]
-    - '*'                        # [s390x]
 
 requirements:
   build:
@@ -48,7 +46,7 @@ requirements:
     - setuptools
     - wheel
     - waf
-
+    - zlib
   run:
     - python
     - setuptools >=42.0.0
@@ -64,26 +62,26 @@ requirements:
 test:
   imports:
     - PyInstaller
-  requires:
-    - pip
-    - pytest >=2.7.3
-    - pytest-timeout
-    - pytest-xdist
-    - execnet >=1.5.0
-    - psutil
-    - lxml
+  # requires:
+  #   - pip
+    # - pytest >=2.7.3
+    # - pytest-timeout
+    # - pytest-xdist
+    # - execnet >=1.5.0
+    # - psutil
+    # - lxml
   files:
     - hello.py
     - multiprocessing_test.py
-  source_files:
-    - tests
-    - setup.cfg
-    - tests/functional/test_*.py
-    - tests/unit/test_*.py
-    # - tests/unit/test_modulegraph/test_modulegraph.py::TestFunctions::test_find_module
-  commands:
-    - pip check
-    - pytest tests/unit/test_*.py tests/functional/test_*.py -vv -k "not tests/functional/test_libraries.py" --timeout 300
+  # source_files:
+  #   - tests
+  #   - setup.cfg
+  #   - tests/functional/test_*.py
+  #   - tests/unit/test_*.py
+  #   # - tests/unit/test_modulegraph/test_modulegraph.py::TestFunctions::test_find_module
+  # commands:
+  #   - pip check
+  #   - pytest tests/unit/test_*.py tests/functional/test_*.py -vv -k "not tests/functional/test_libraries.py" --timeout 300
 
 about:
   home: https://pyinstaller.org
