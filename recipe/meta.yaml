@@ -8,6 +8,8 @@ package:
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: f4a75c552facc2e2a370f1e422b971b5e5cdb4058ff38cea0235aa21fc0b378f
+  patches:
+    - recipe/0001-don-t-set-arc.patch
 
 build:
   number: 0
@@ -39,7 +41,7 @@ build:
 requirements:
   build:
     - {{ compiler("c") }}
-
+    - patch           # [not win]
   host:
     - pip
     - python
@@ -51,7 +53,7 @@ requirements:
     - python
     - setuptools >=42.0.0
     - altgraph
-    # - binutils  # [aarch64]
+    - binutils  # [aarch64]
     - pefile >=2022.5.30  # [win]
     - pywin32-ctypes >=0.2.1 # [win]
     - macholib >=1.8  # [osx]
@@ -62,26 +64,9 @@ requirements:
 test:
   imports:
     - PyInstaller
-  # requires:
-  #   - pip
-    # - pytest >=2.7.3
-    # - pytest-timeout
-    # - pytest-xdist
-    # - execnet >=1.5.0
-    # - psutil
-    # - lxml
   files:
     - hello.py
     - multiprocessing_test.py
-  # source_files:
-  #   - tests
-  #   - setup.cfg
-  #   - tests/functional/test_*.py
-  #   - tests/unit/test_*.py
-  #   # - tests/unit/test_modulegraph/test_modulegraph.py::TestFunctions::test_find_module
-  # commands:
-  #   - pip check
-  #   - pytest tests/unit/test_*.py tests/functional/test_*.py -vv -k "not tests/functional/test_libraries.py" --timeout 300
 
 about:
   home: https://pyinstaller.org
