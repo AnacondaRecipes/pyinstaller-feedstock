@@ -58,7 +58,6 @@ requirements:
     - pywin32-ctypes >=0.2.1 # [win]
     - macholib >=1.8  # [osx]
     - pyinstaller-hooks-contrib >=2024.7
-    # - pywin32  # [win]
     - importlib-metadata >=4.6  # [py<310]
     - packaging >=22.0
 
@@ -73,6 +72,9 @@ test:
     - execnet >=1.5.0
     - psutil
     - lxml
+  files:
+    - hello.py
+    - multiprocessing_test.py
   source_files:
     - tests
     - setup.cfg
