@@ -9,7 +9,7 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: f4a75c552facc2e2a370f1e422b971b5e5cdb4058ff38cea0235aa21fc0b378f
   patches:
-    - recipe/0001-don-t-set-arc.patch
+    - 0001-don-t-set-arch.patch
 
 build:
   number: 0
@@ -42,6 +42,7 @@ requirements:
   build:
     - {{ compiler("c") }}
     - patch           # [not win]
+    - m2-patch        # [win]
   host:
     - pip
     - python
@@ -64,6 +65,8 @@ requirements:
 test:
   imports:
     - PyInstaller
+  requires:
+    - pip
   files:
     - hello.py
     - multiprocessing_test.py
@@ -85,6 +88,9 @@ about:
   doc_url: https://pyinstaller.org
 
 extra:
+  skip_lints:
+    - python_build_tool_in_run
+    - host_section_needs_exact_pinnings
   recipe-maintainers:
     - jakirkham
     - nicoddemus
