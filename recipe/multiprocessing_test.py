@@ -40,9 +40,9 @@ if __name__ == '__main__':
     resultQueue = multiprocessing.Queue()
     p = SendeventProcess(resultQueue)
     # This is the 'correct' fix for this code as-per the docs and upstream and it does
-    # work (as does set_start_method('fork'), but, from 
+    # work (as does set_start_method('fork'), but, from
     # "Adding p.join() immediately after p.start() seems to work, but increases the total run-time by
-    #  factor between two and four, user time by factor of five, and system time by factor of ten. 
+    #  factor between two and four, user time by factor of five, and system time by factor of ten.
     #  Occasionally even with p.join() I'm getting some processes crashing like
     #  shown in https://bugs.python.org/issue33725#msg365249."
     #

@@ -1,6 +1,5 @@
 {% set name = "pyinstaller" %}
-{% set version = "5.13.2" %}
-{% set sha256 = "c8e5d3489c3a7cc5f8401c2d1f48a70e588f9967e391c3b06ddac1f685f8d5d2" %}
+{% set version = "6.9.0" %}
 
 package:
   name: {{ name|lower }}
@@ -8,14 +7,15 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  sha256: f4a75c552facc2e2a370f1e422b971b5e5cdb4058ff38cea0235aa21fc0b378f
+  patches:
+    - 0001-don-t-set-arch.patch
 
 build:
   number: 0
-  # temporary skip to remedy py312 missing on win
-  skip: True  # [not (win and py==312)]
+  skip: True  # [py<38 or py>312]
   entry_points:
-    - pyinstaller = PyInstaller.__main__:run
+    - pyinstaller = PyInstaller.__main__:_console_script_run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
     - pyi-bindepend = PyInstaller.utils.cliutils.bindepend:run
     - pyi-grab_version = PyInstaller.utils.cliutils.grab_version:run
@@ -31,37 +31,37 @@ build:
     - rd /s /q %SRC_DIR%\bootloader\waflib  # [win]
     # Build the bootloader
     - pushd bootloader
-    - waf --prefix="${PREFIX}" --target-arch=64bit --clang distclean all  # [osx]
-    - waf --prefix="${PREFIX}" --gcc --no-lsb distclean all     # [linux]
+    - waf --prefix="${PREFIX}" --clang distclean all  # [osx]
+    - waf --prefix="${PREFIX}" --gcc distclean all     # [linux]
     - waf --prefix="%LIBRARY_PREFIX%" distclean all             # [win]
     - popd
-    - "{{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv"
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   preserve_egg_dir: True
-  overlinking_ignore_patterns:   # [s390x]
-    - '*'                        # [s390x]
 
 requirements:
   build:
     - {{ compiler("c") }}
-
+    - patch           # [not win]
+    - m2-patch        # [win]
   host:
     - pip
     - python
     - setuptools
     - wheel
     - waf
-
+    # zlib is vendored in the bootloader
+    - zlib
   run:
+    - python
+    - setuptools >=42.0.0
     - altgraph
     - binutils  # [aarch64]
-    - python
     - pefile >=2022.5.30  # [win]
-    - pyinstaller-hooks-contrib >=2021.4
-    - pywin32  # [win]
-    - pywin32-ctypes  # [win]
+    - pywin32-ctypes >=0.2.1 # [win]
     - macholib >=1.8  # [osx]
-    - setuptools >=42.0.0  # due to pkg_resources import
-    - importlib-metadata >=1.4  # [py<38]
+    - pyinstaller-hooks-contrib >=2024.7
+    - importlib-metadata >=4.6  # [py<310]
+    - packaging >=22.0
 
 test:
   imports:
@@ -74,7 +74,7 @@ test:
 
 about:
   home: https://pyinstaller.org
-  license: GPL-2.0-or-later
+  license: GPL-2.0-or-later WITH Bootloader-exception AND Apache-2.0
   license_family: GPL
   license_file: COPYING.txt
   summary: PyInstaller bundles a Python application and all its dependencies into a single package.
@@ -89,6 +89,9 @@ about:
   doc_url: https://pyinstaller.org
 
 extra:
+  skip-lints:
+    - python_build_tool_in_run
+    - host_section_needs_exact_pinnings
   recipe-maintainers:
     - jakirkham
     - nicoddemus
