@@ -49,6 +49,7 @@ requirements:
     - setuptools
     - wheel
     - waf
+    # zlib is vendored in the bootloader
     - zlib
   run:
     - python
@@ -73,7 +74,7 @@ test:
 
 about:
   home: https://pyinstaller.org
-  license: GPL-2.0-or-later
+  license: GPL-2.0-or-later WITH Bootloader-exception AND Apache-2.0
   license_family: GPL
   license_file: COPYING.txt
   summary: PyInstaller bundles a Python application and all its dependencies into a single package.
