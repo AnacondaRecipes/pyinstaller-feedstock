@@ -1,5 +1,5 @@
 {% set name = "pyinstaller" %}
-{% set version = "6.9.0" %}
+{% set version = "6.12.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: f4a75c552facc2e2a370f1e422b971b5e5cdb4058ff38cea0235aa21fc0b378f
+  sha256: 1834797be48ce1b26015af68bdeb3c61a6c7500136f04e0fc65e468115dec777
   patches:
     - 0001-don-t-set-arch.patch
 
@@ -56,10 +56,10 @@ requirements:
     - setuptools >=42.0.0
     - altgraph
     - binutils  # [aarch64]
-    - pefile >=2022.5.30  # [win]
+    - pefile >=2022.5.30, !=2024.8.26  # [win]
     - pywin32-ctypes >=0.2.1 # [win]
     - macholib >=1.8  # [osx]
-    - pyinstaller-hooks-contrib >=2024.7
+    - pyinstaller-hooks-contrib >=2025.1
     - importlib-metadata >=4.6  # [py<310]
     - packaging >=22.0
 
