@@ -9,11 +9,12 @@ source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: 1834797be48ce1b26015af68bdeb3c61a6c7500136f04e0fc65e468115dec777
   patches:
-    - 0001-don-t-set-arch.patch
+    - patches/0001-don-t-set-arch.patch
+    - patches/0002-Including-sys-ipc.h-requires-defining-_XOPEN_SOURCE-.patch
 
 build:
   number: 0
-  skip: True  # [py<38 or py>312]
+  skip: True  # [py<38 or py>313]
   entry_points:
     - pyinstaller = PyInstaller.__main__:_console_script_run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
