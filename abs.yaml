@@ -3,3 +3,6 @@ build_env_vars:
 
 channels:
   - https://staging.continuum.io/prefect/fs/pyinstaller-hooks-contrib-feedstock/pr4/726bfbb
+
+content_signing:
+  win-64: False
