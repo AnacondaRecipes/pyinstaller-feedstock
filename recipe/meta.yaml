@@ -14,8 +14,8 @@ source:
 
 build:
   number: 0
-  skip: True  # [py<38 or py>315]
-  skip: True  # [win] (Until https://anaconda.atlassian.net/browse/SIR-2624 is addressed)
+  # skip win until https://anaconda.atlassian.net/browse/SIR-2624 is addressed
+  skip: True  # [py<38 or py>315 or win]
   entry_points:
     - pyinstaller = PyInstaller.__main__:_console_script_run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
