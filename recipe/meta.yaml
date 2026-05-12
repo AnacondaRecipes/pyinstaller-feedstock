@@ -1,5 +1,5 @@
 {% set name = "pyinstaller" %}
-{% set version = "6.12.0" %}
+{% set version = "6.20.0" %}
 
 package:
   name: {{ name|lower }}
@@ -14,7 +14,8 @@ source:
 
 build:
   number: 0
-  skip: True  # [py<38 or py>313]
+  skip: True  # [py<38 or py>315]
+  skip: True  # [win] (Until https://anaconda.atlassian.net/browse/SIR-2624 is addressed)
   entry_points:
     - pyinstaller = PyInstaller.__main__:_console_script_run
     - pyi-archive_viewer = PyInstaller.utils.cliutils.archive_viewer:run
@@ -42,25 +43,22 @@ build:
 requirements:
   build:
     - {{ compiler("c") }}
-    - patch           # [not win]
-    - m2-patch        # [win]
+    - {{ stdlib("c") }}
   host:
     - pip
     - python
-    - setuptools
-    - wheel
+    - hatchling
     - waf
     # zlib is vendored in the bootloader
-    - zlib
+    - zlib {{ zlib}}
   run:
     - python
     - setuptools >=42.0.0
     - altgraph
-    - binutils  # [aarch64]
     - pefile >=2022.5.30, !=2024.8.26  # [win]
     - pywin32-ctypes >=0.2.1 # [win]
     - macholib >=1.8  # [osx]
-    - pyinstaller-hooks-contrib >=2025.1
+    - pyinstaller-hooks-contrib >=2026.4
     - importlib-metadata >=4.6  # [py<310]
     - packaging >=22.0
 
