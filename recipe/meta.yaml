@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 1834797be48ce1b26015af68bdeb3c61a6c7500136f04e0fc65e468115dec777
+  sha256: 95c5c7e03d5d61e9dfb8ef259c699cf492bb1041beb6dbe83696608cec07347a
   patches:
     - patches/0001-don-t-set-arch.patch
     - patches/0002-Including-sys-ipc.h-requires-defining-_XOPEN_SOURCE-.patch
