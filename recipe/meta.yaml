@@ -69,7 +69,6 @@ test:
     - pip
   files:
     - hello.py
-    - multiprocessing_test.py
 
 about:
   home: https://pyinstaller.org
