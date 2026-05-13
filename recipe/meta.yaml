@@ -50,7 +50,7 @@ requirements:
     - hatchling
     - waf
     # zlib is vendored in the bootloader
-    - zlib {{ zlib}}
+    - zlib {{ zlib }}
   run:
     - python
     - setuptools >=42.0.0
