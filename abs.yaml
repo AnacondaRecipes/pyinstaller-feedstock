@@ -1,6 +1,3 @@
-build_env_vars:
-  ANACONDA_ROCKET_ENABLE_PY313 : yes
-
 # Turned off to address exe used for bootstrapping found in
 # https://anaconda.atlassian.net/browse/SIR-1430
 content_signing:
